@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to X</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <main class="login-page">
+        <section class="login-card" aria-labelledby="page-title">
+            <div class="brand-mark" aria-label="X">X</div>
+
+            <h1 id="page-title">Sign in to X</h1>
+
+            <button class="social-button" type="button">
+                <span class="social-icon google-icon" aria-hidden="true">G</span>
+                Sign in with Google
+            </button>
+
+            <button class="social-button" type="button">
+                <span class="social-icon apple-icon" aria-hidden="true">A</span>
+                Sign in with Apple
+            </button>
+
+            <div class="divider" aria-hidden="true"><span>or</span></div>
+
+            <form action="#" method="post">
+                <label for="username">Phone, email, or username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required>
+                <button class="next-button" type="submit">Next</button>
+            </form>
+
+            <button class="forgot-button" type="button">Forgot password?</button>
+
+            <p class="signup-text">Don't have an account? <a href="#signup">Sign up</a></p>
+        </section>
+    </main>
+</body>
+</html>

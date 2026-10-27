@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+</head>
+<body>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        #billOutput {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .item {
+            margin: 5px 0;
+            
+        }
+    </style>
+    <h1>Bill Generator</h1>
+
+    <h2> Select Items</h2>
+
+    <form id="billForm">
+        item 1: <input class="item" type="checkbox" name="item1" value="10"> 10<br>
+        item 2: <input class ="item" type="checkbox" name="item2" value="20"> 20<br>
+        item 3: <input class="item" type="checkbox" name="item3" value="30"> 30<br>
+        item 4: <input class="item" type="checkbox" name="item4" value="40"> 40<br>
+        <input type="submit" value="Generate Bill">
+    </form>
+
+    <h2>Bill</h2>
+    <div id="billOutput"></div>
+
+    <script src = "app.js"></script>
+</body>
+</html>

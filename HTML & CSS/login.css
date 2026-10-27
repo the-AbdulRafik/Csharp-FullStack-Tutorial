@@ -1,0 +1,189 @@
+:root {
+    --text: #0f1419;
+    --muted: #536471;
+    --border: #cfd9de;
+    --button: #0f1419;
+    --link: #1d9bf0;
+    --page: #f7f9f9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background: var(--page);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 16px;
+}
+
+.login-card {
+    width: min(100%, 390px);
+    padding: 24px 32px 32px;
+    background: #ffffff;
+    border: 1px solid #e5e7e8;
+    border-radius: 14px;
+}
+
+.brand-mark {
+    margin-bottom: 22px;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.social-button,
+.next-button,
+.forgot-button {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 22px;
+    font-weight: 700;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--text);
+    font-size: 14px;
+}
+
+.social-button:hover,
+.forgot-button:hover {
+    background: #f2f2f2;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-weight: 700;
+}
+
+.google-icon {
+    color: #4285f4;
+    font-size: 18px;
+}
+
+.apple-icon {
+    color: #000000;
+    font-size: 12px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #eff3f4;
+}
+
+form label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    height: 52px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    outline: none;
+    color: var(--text);
+    background: #ffffff;
+    font-size: 17px;
+}
+
+input:focus {
+    border: 2px solid var(--link);
+}
+
+.next-button {
+    margin-top: 20px;
+    border: 1px solid var(--button);
+    background: var(--button);
+    color: #ffffff;
+}
+
+.next-button:hover {
+    background: #272c30;
+}
+
+.forgot-button {
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--text);
+}
+
+.signup-text {
+    margin: 34px 0 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 0;
+    }
+
+    .login-card {
+        width: 100%;
+        min-height: 100vh;
+        padding: 24px 24px 32px;
+        border: 0;
+        border-radius: 0;
+    }
+}
