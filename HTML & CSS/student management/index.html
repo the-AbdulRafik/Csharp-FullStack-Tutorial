@@ -8,13 +8,11 @@
 <body>
     <div>
         <div><h1>Student Management</h1></div>
-        <section id = "main">
-            <button>Add Student</button>
-            <button>View Students</button>
-            <button>Delete Student</button>
+        <section id="main">
+            <button onclick="getStudents()">View Students</button>
         </section>
 
-        <section id = "addStudent">
+        <section id="addStudent">
             <h2>Add Student</h2>
             <form id="addStudentForm" onsubmit="addStudent(event)">
                 <label for="name">Name:</label>
@@ -27,7 +25,7 @@
             </form>
         </section>
 
-        <section id = "viewStudents">
+        <section id="viewStudents">
             <h2>View Students</h2>
             <table id="studentTable" border="1">
                 <thead>
@@ -42,7 +40,7 @@
                 </tbody>
             </table>
         </section>
-        <section id = "deleteStudent">
+        <section id="deleteStudent">
             <h2>Delete Student</h2>
             <form id="deleteStudentForm">
                 <label for="deleteName">Name:</label>
@@ -52,8 +50,6 @@
         </section>
     </div>
 
-    <script src = "app.js"></script>
-
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
