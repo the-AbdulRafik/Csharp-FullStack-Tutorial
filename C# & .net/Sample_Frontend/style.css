@@ -1,0 +1,326 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color: #17213b;
+  background: #f3f6fb;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+.topbar {
+  align-items: center;
+  background: linear-gradient(110deg, #10192d, #37318a);
+  border-radius: 0 0 18px 18px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 30px;
+  max-width: 1540px;
+  padding: 30px 36px;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+}
+
+h2 {
+  font-size: 1.55rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+.eyebrow {
+  color: #777e95;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  margin-bottom: 8px;
+}
+
+.topbar .eyebrow {
+  color: #aeb6dc;
+}
+
+.layout {
+  align-items: start;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, .9fr);
+  margin: 0 auto;
+  max-width: 1540px;
+  padding: 0 36px 40px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e2e7f0;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(30, 45, 80, .07);
+  padding: 28px;
+}
+
+.section-heading {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.compact {
+  margin-bottom: 16px;
+}
+
+.form-section, .accounts-section {
+  border-top: 1px solid #e5e9f1;
+  margin-top: 26px;
+  padding-top: 24px;
+}
+
+.form-title {
+  align-items: baseline;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-title span {
+  color: #8c94a9;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: .75rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+label {
+  color: #44506b;
+  display: grid;
+  font-size: .83rem;
+  font-weight: 700;
+  gap: 7px;
+}
+
+input, select {
+  background: #fbfcfe;
+  border: 1px solid #ccd6e5;
+  border-radius: 9px;
+  color: #17213b;
+  font: inherit;
+  font-weight: 400;
+  min-height: 44px;
+  padding: 10px 12px;
+}
+
+input:focus, select:focus {
+  border-color: #5146e5;
+  box-shadow: 0 0 0 3px rgba(81, 70, 229, .14);
+  outline: none;
+}
+
+.button {
+  border: 0;
+  border-radius: 9px;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+  min-height: 42px;
+  padding: 10px 16px;
+  transition: transform .15s ease, opacity .15s ease;
+}
+
+.button:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: #5146e5;
+}
+
+.button-secondary {
+  background: #e9edff;
+  color: #37318a;
+}
+
+.button-danger {
+  background: #d94d68;
+}
+
+.transaction-grid {
+  align-items: end;
+  grid-template-columns: 1.4fr 1fr 1.25fr;
+}
+
+.transaction-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.transaction-actions .button {
+  flex: 1;
+}
+
+.search input {
+  min-width: 220px;
+}
+
+.account-card {
+  align-items: center;
+  border: 1px solid #e2e7f0;
+  border-radius: 12px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(150px, 1fr) auto auto;
+  margin-bottom: 10px;
+  padding: 14px;
+}
+
+.account-name {
+  font-weight: 800;
+}
+
+.account-meta, .muted {
+  color: #7a849b;
+  font-size: .83rem;
+}
+
+.account-balance {
+  color: #168274;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.account-edit, .account-delete {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.account-edit {
+  color: #5146e5;
+}
+
+.account-delete {
+  color: #d94d68;
+}
+
+.status {
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+  padding: 8px 12px;
+}
+
+.status-idle {
+  background: rgba(255, 255, 255, .14);
+}
+
+.status-online {
+  background: #b9f3df;
+  color: #126a5c;
+}
+
+.status-offline {
+  background: #ffd8df;
+  color: #a82c48;
+}
+
+.message {
+  border-radius: 8px;
+  display: none;
+  margin-top: 20px;
+  padding: 11px 13px;
+}
+
+.message.visible {
+  display: block;
+}
+
+.message.success {
+  background: #e2f8ef;
+  color: #166854;
+}
+
+.message.error {
+  background: #ffebee;
+  color: #a82c48;
+}
+
+pre {
+  background: #10192d;
+  border-radius: 12px;
+  color: #a5e6d4;
+  min-height: 420px;
+  overflow: auto;
+  padding: 18px;
+  white-space: pre-wrap;
+}
+
+.sr-only {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar, .layout {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .topbar {
+    align-items: start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .form-grid, .transaction-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-card {
+    align-items: start;
+    grid-template-columns: 1fr auto;
+  }
+
+  .account-card .account-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .search input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .section-heading.compact {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

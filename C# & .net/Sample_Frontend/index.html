@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Management API</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">CONNECTED FRONTEND</p>
+      <h1>Bank Management API</h1>
+    </div>
+    <span id="apiStatus" class="status status-idle">API status: checking...</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel operations-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ACCOUNT OPERATIONS</p>
+          <h2>Manage accounts</h2>
+        </div>
+        <button id="loadAccountsButton" class="button button-secondary" type="button">Refresh accounts</button>
+      </div>
+
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+
+      <form id="createAccountForm" class="form-section">
+        <div class="form-title">
+          <h3>Create account</h3>
+          <span>POST /api/accounts</span>
+        </div>
+        <div class="form-grid">
+          <label>
+            Account holder
+            <input name="accountHolderName" type="text" placeholder="e.g. Kavitha Rao" required>
+          </label>
+          <label>
+            Account number
+            <input name="accountNumber" type="text" placeholder="e.g. AC10001" required>
+          </label>
+          <label>
+            Account type
+            <select name="accountType" required>
+              <option value="">Choose type</option>
+              <option>Savings</option>
+              <option>Current</option>
+              <option>Salary</option>
+            </select>
+          </label>
+          <label>
+            Opening balance
+            <input name="balance" type="number" min="0" step="0.01" placeholder="0.00" required>
+          </label>
+        </div>
+        <button class="button button-primary" type="submit">Create account</button>
+      </form>
+
+      <form id="transactionForm" class="form-section">
+        <div class="form-title">
+          <h3>Deposit or withdraw</h3>
+          <span>POST transactions · PUT account updates</span>
+        </div>
+        <div class="form-grid transaction-grid">
+          <label>
+            Account
+            <select id="transactionAccount" name="accountId" required>
+              <option value="">Select an account</option>
+            </select>
+          </label>
+          <label>
+            Amount
+            <input name="amount" type="number" min="0.01" step="0.01" placeholder="100.00" required>
+          </label>
+          <div class="transaction-actions">
+            <button class="button button-primary" data-transaction="deposit" type="submit">Deposit</button>
+            <button class="button button-danger" data-transaction="withdraw" type="submit">Withdraw</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="accounts-section">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">LIVE DATA</p>
+            <h3>Accounts</h3>
+          </div>
+          <label class="search">
+            <span class="sr-only">Search accounts</span>
+            <input id="searchInput" type="search" placeholder="Search by name or number">
+          </label>
+        </div>
+        <div id="accountsList" class="accounts-list"></div>
+      </div>
+    </section>
+
+    <aside class="panel response-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FETCH + JSON</p>
+          <h2>API response</h2>
+        </div>
+      </div>
+      <p class="muted">The latest request result appears here.</p>
+      <pre id="responseOutput">Waiting for API request...</pre>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
