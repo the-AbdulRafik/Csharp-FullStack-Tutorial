@@ -1,0 +1,11 @@
+namespace Sample_Example.Models;
+
+public class Course
+{
+    public int CourseId { get; set; }
+    public string CourseName { get; set; } = string.Empty;
+    public int DurationMonths { get; set; }
+    public decimal Fee { get; set; }
+    public int DepartmentId { get; set; }
+    public bool IsActive { get; set; }
+}
