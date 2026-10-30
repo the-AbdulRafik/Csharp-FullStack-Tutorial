@@ -25,3 +25,7 @@ desktop.ini
 
 # Runtime local datasets
 courier-data.json
+
+//Custom ignore rules for specific files or directories
+
+EFCORE_PRACTICE/
