@@ -4,11 +4,28 @@ using LibraryLoanManagement.Repositories;
 using LibraryLoanManagement.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
-var services = new ServiceCollection();
+
+var builder = Host.CreateApplicationBuilder(args);
+
+var services = builder.Services;
+// services.AddDbContext<LibraryDbContext>(options =>
+//     options.UseSqlServer(
+//         @"Server=.\SQLEXPRESS;Database=LibraryLoanDB;Trusted_Connection=True;TrustServerCertificate=True;"));
+
 services.AddDbContext<LibraryDbContext>(options =>
-    options.UseSqlServer(
-        @"Server=.\SQLEXPRESS;Database=LibraryLoanDB;Trusted_Connection=True;TrustServerCertificate=True;"));
+{
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile("app.settings.json")
+        .Build();
+    var connectionString = configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlServer(connectionString);
+
+    Console.WriteLine($"Using connection string: {connectionString}");
+});
+
 services.AddScoped<BranchRepository>();
 services.AddScoped<MemberRepository>();
 services.AddScoped<BookRepository>();
