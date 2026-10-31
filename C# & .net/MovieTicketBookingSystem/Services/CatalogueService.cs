@@ -90,8 +90,10 @@ public class CatalogueService(ApplicationDbContext db)
     {
         if (!await db.Screens.AnyAsync(x => x.ScreenId == request.ScreenId)) throw new KeyNotFoundException("Screen was not found.");
         var definitions = request.Seats.Select(x => new { Row = x.RowName.Trim().ToUpperInvariant(), x.SeatNumber, Type = x.SeatType.Trim() }).ToList();
+        var existingCoordinates = await db.Seats.Where(x => x.ScreenId == request.ScreenId)
+            .Select(x => new { x.RowName, x.SeatNumber }).ToListAsync();
         if (definitions.GroupBy(x => new { x.Row, x.SeatNumber }).Any(x => x.Count() > 1) ||
-            await db.Seats.AnyAsync(x => x.ScreenId == request.ScreenId && definitions.Any(d => d.Row == x.RowName && d.SeatNumber == x.SeatNumber)))
+            definitions.Any(d => existingCoordinates.Any(x => x.RowName == d.Row && x.SeatNumber == d.SeatNumber)))
             throw new InvalidOperationException("Duplicate seat coordinates are not allowed.");
         var seats = definitions.Select(x => new Seat { ScreenId = request.ScreenId, RowName = x.Row, SeatNumber = x.SeatNumber, SeatType = x.Type }).ToList();
         db.Seats.AddRange(seats); await db.SaveChangesAsync();
