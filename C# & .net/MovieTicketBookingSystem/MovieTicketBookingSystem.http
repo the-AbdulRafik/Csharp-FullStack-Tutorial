@@ -1,6 +1,30 @@
 @MovieTicketBookingSystem_HostAddress = http://localhost:5169
 
-GET {{MovieTicketBookingSystem_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{MovieTicketBookingSystem_HostAddress}}/api/movies
+Content-Type: application/json
+
+{
+  "title": "Leo",
+  "description": "Action thriller",
+  "durationMinutes": 164,
+  "releaseDate": "2023-10-19",
+  "language": "Tamil",
+  "genre": "Action"
+}
 
 ###
+
+GET {{MovieTicketBookingSystem_HostAddress}}/api/movies?pageNumber=1&pageSize=20
+
+###
+
+POST {{MovieTicketBookingSystem_HostAddress}}/api/bookings
+Content-Type: application/json
+
+{
+  "customerName": "Arun",
+  "customerEmail": "arun@example.com",
+  "customerPhone": "9876543210",
+  "showId": 1,
+  "seatIds": [1, 2]
+}

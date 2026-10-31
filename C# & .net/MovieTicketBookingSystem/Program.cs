@@ -20,6 +20,12 @@ builder.Services.AddScoped<BookingService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var database = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    database.Database.Migrate();
+}
+
 app.UseMiddleware<GlobalExceptionHandler>();
 if (app.Environment.IsDevelopment())
 {

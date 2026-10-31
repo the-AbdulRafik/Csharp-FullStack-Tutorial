@@ -23,7 +23,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(x => x.Description).HasMaxLength(500);
             entity.Property(x => x.Language).HasMaxLength(50).IsRequired();
             entity.Property(x => x.Genre).HasMaxLength(50).IsRequired();
-            entity.HasCheckConstraint("CK_Movies_DurationMinutes", "[DurationMinutes] > 0");
+            entity.ToTable("Movies", table => table.HasCheckConstraint("CK_Movies_DurationMinutes", "[DurationMinutes] > 0"));
         });
 
         modelBuilder.Entity<Theatre>(entity =>
@@ -47,7 +47,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(x => x.RowName).HasMaxLength(5).IsRequired();
             entity.Property(x => x.SeatType).HasMaxLength(30).IsRequired();
             entity.HasIndex(x => new { x.ScreenId, x.RowName, x.SeatNumber }).IsUnique();
-            entity.HasCheckConstraint("CK_Seats_SeatNumber", "[SeatNumber] > 0");
+            entity.ToTable("Seats", table => table.HasCheckConstraint("CK_Seats_SeatNumber", "[SeatNumber] > 0"));
             entity.HasOne(x => x.Screen).WithMany(x => x.Seats).HasForeignKey(x => x.ScreenId).OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -55,8 +55,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             entity.HasKey(x => x.ShowId);
             entity.Property(x => x.TicketPrice).HasPrecision(10, 2);
-            entity.HasCheckConstraint("CK_Shows_TimeRange", "[EndTime] > [StartTime]");
-            entity.HasCheckConstraint("CK_Shows_TicketPrice", "[TicketPrice] >= 0");
+            entity.ToTable("Shows", table =>
+            {
+                table.HasCheckConstraint("CK_Shows_TimeRange", "[EndTime] > [StartTime]");
+                table.HasCheckConstraint("CK_Shows_TicketPrice", "[TicketPrice] >= 0");
+            });
             entity.HasOne(x => x.Movie).WithMany(x => x.Shows).HasForeignKey(x => x.MovieId).OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(x => x.Screen).WithMany(x => x.Shows).HasForeignKey(x => x.ScreenId).OnDelete(DeleteBehavior.Restrict);
         });
@@ -80,7 +83,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(x => x.CustomerPhone).HasMaxLength(15).IsRequired();
             entity.Property(x => x.TotalAmount).HasPrecision(10, 2);
             entity.Property(x => x.Status).HasConversion<string>().HasMaxLength(20).IsRequired();
-            entity.HasCheckConstraint("CK_Bookings_TotalAmount", "[TotalAmount] >= 0");
+            entity.ToTable("Bookings", table => table.HasCheckConstraint("CK_Bookings_TotalAmount", "[TotalAmount] >= 0"));
             entity.HasOne(x => x.Show).WithMany(x => x.Bookings).HasForeignKey(x => x.ShowId).OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -88,7 +91,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             entity.HasKey(x => x.BookingSeatId);
             entity.Property(x => x.Price).HasPrecision(10, 2);
-            entity.HasCheckConstraint("CK_BookingSeats_Price", "[Price] >= 0");
+            entity.ToTable("BookingSeats", table => table.HasCheckConstraint("CK_BookingSeats_Price", "[Price] >= 0"));
             entity.HasOne(x => x.Booking).WithMany(x => x.BookingSeats).HasForeignKey(x => x.BookingId).OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(x => x.Seat).WithMany(x => x.BookingSeats).HasForeignKey(x => x.SeatId).OnDelete(DeleteBehavior.Restrict);
         });
