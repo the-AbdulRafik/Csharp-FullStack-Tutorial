@@ -17,8 +17,12 @@ public class MoviesController(IMovieService service) : ControllerBase
         await service.GetByIdAsync(id) is { } movie ? Ok(movie) : NotFound();
 
     [HttpGet("search")]
-    public async Task<ActionResult<IReadOnlyList<MovieResponse>>> Search([FromQuery] string title) =>
-        Ok(await service.GetAllAsync(1, 100, title));
+    public async Task<ActionResult<IReadOnlyList<MovieResponse>>> Search([FromQuery] string title)
+    {
+        if (string.IsNullOrWhiteSpace(title))
+            return BadRequest("The title query parameter is required.");
+        return Ok(await service.GetAllAsync(1, 100, title.Trim()));
+    }
 
     [HttpPost]
     public async Task<ActionResult<MovieResponse>> Create(CreateMovieRequest request)
