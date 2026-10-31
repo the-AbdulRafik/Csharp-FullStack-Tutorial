@@ -4,6 +4,7 @@ using MovieTicketBookingSystem.Repositories;
 using MovieTicketBookingSystem.Repositories.Interfaces;
 using MovieTicketBookingSystem.Services;
 using MovieTicketBookingSystem.Services.Interfaces;
+using MovieTicketBookingSystem.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddScoped<BookingService>();
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandler>();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
