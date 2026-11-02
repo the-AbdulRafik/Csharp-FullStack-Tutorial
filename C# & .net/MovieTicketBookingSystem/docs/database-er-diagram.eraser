@@ -65,6 +65,15 @@ BookingSeats {
   price decimal
 }
 
+Users {
+  userId int pk
+  fullName string
+  email string unique
+  passwordHash string
+  role string
+  createdAt datetime
+}
+
 Theatres.theatreId < Screens.theatreId
 Screens.screenId < Seats.screenId
 Movies.movieId < Shows.movieId

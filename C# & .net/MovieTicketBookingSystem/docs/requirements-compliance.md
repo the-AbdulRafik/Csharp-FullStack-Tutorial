@@ -2,7 +2,7 @@
 
 | Requirement | Implementation | Status |
 | --- | --- | --- |
-| Eight database tables | `Movie`, `Theatre`, `Screen`, `Seat`, `Show`, `ShowSeat`, `Booking`, `BookingSeat` | Complete |
+| Booking and authentication database tables | Eight booking tables plus `User` | Complete |
 | EF Core relationships and Fluent API | `Data/ApplicationDbContext.cs` | Complete |
 | SQL Server database and migration | `Migrations/InitialCreate` and startup migration | Complete |
 | Movie CRUD and title search | `MoviesController`, `MovieService`, `MovieRepository` | Complete |
@@ -19,7 +19,8 @@
 | Global exception handling | `Middleware/GlobalExceptionHandler.cs` | Complete |
 | OpenAPI documentation | `/openapi/v1.json` | Complete |
 | Repository and service interfaces | Six repository abstractions and service abstractions under `Repositories/Interfaces` and `Services/Interfaces`, consumed through dependency injection | Complete |
-| Authentication, payment, Angular frontend | Explicitly excluded from Version 1 | Intentionally excluded |
+| JWT authentication and role authorization | `AuthController`, `UserService`, `JwtService`, controller role attributes | Complete extension |
+| Payment, Angular frontend | Not implemented in this backend | Not in scope |
 | Advanced concurrency and temporary holds | Explicitly excluded from Version 1 | Intentionally excluded |
 
 The application has been validated with a successful build, local SQL Server migration, OpenAPI request, health check, and complete create-show-book-cancel workflow.

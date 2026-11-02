@@ -13,6 +13,7 @@ flowchart TD
     subgraph App["ASP.NET Core Application"]
         Controllers["REST Controllers"]
         Services["Business Services"]
+        Security["JWT Authentication"]
         Middleware["Exception Middleware"]
     end
     subgraph Data["Data Layer"]
@@ -24,6 +25,8 @@ flowchart TD
     ApiClient -->|"HTTP JSON requests"| Middleware
     Middleware -->|"routes requests"| Controllers
     Controllers -->|"calls services"| Services
+    Middleware -->|"authenticates bearer tokens"| Security
+    Security -->|"authorizes roles"| Controllers
     Services -->|"uses repositories"| Repositories
     Repositories -->|"LINQ and EF Core"| Context
     Context -->|"SQL queries"| Database
@@ -42,7 +45,7 @@ flowchart TD
 
 ### Data Storage and External Services
 
-The application uses SQL Server through EF Core. There is no cache, message broker, payment provider, authentication provider, or external API in Version 1.
+The application uses SQL Server through EF Core and stores users alongside booking data. JWTs are generated and validated by the application; there is no cache, message broker, payment provider, or external identity provider.
 
 ### Key Architectural Decisions
 
@@ -60,12 +63,15 @@ flowchart LR
         cCatalogue["CatalogueControllers"]
         cShows["ShowsController"]
         cBookings["BookingsController"]
+        cAuth["AuthController"]
     end
     subgraph BusinessLayer["Business Logic"]
         cMovieService["MovieService"]
         cCatalogueService["CatalogueService"]
         cShowService["ShowService"]
         cBookingService["BookingService"]
+        cUserService["UserService"]
+        cJwtService["JwtService"]
     end
     subgraph DataAccessLayer["Data Access"]
         cMovieRepository["MovieRepository"]
@@ -74,16 +80,21 @@ flowchart LR
         cSeatRepository["SeatRepository"]
         cShowRepository["ShowRepository"]
         cBookingRepository["BookingRepository"]
+        cUserRepository["UserRepository"]
         cDbContext["ApplicationDbContext"]
     end
     subgraph CrossCutting["Cross Cutting"]
         cErrors["GlobalExceptionHandler"]
+        cAuthMiddleware["JWT Authentication"]
     end
 
     cMovies -->|"delegates"| cMovieService
     cCatalogue -->|"delegates"| cCatalogueService
     cShows -->|"delegates"| cShowService
     cBookings -->|"delegates"| cBookingService
+    cAuth -->|"delegates"| cUserService
+    cUserService -->|"issues tokens"| cJwtService
+    cUserService -->|"user access"| cUserRepository
     cMovieService -->|"queries"| cMovieRepository
     cCatalogueService -->|"catalogue access"| cTheatreRepository
     cCatalogueService -->|"catalogue access"| cScreenRepository
@@ -96,6 +107,9 @@ flowchart LR
     cSeatRepository -->|"uses"| cDbContext
     cShowRepository -->|"uses"| cDbContext
     cBookingRepository -->|"uses"| cDbContext
+    cUserRepository -->|"uses"| cDbContext
+    cAuthMiddleware -.->|"protects routes"| cBookings
+    cAuthMiddleware -.->|"protects routes"| cAuth
     cErrors -.->|"wraps requests"| cMovies
     cErrors -.->|"wraps requests"| cBookings
 ~~~
@@ -112,3 +126,8 @@ flowchart LR
 | Repositories | Data Access | Repositories | Encapsulated persistence operations |
 | ApplicationDbContext | Data Access | EF Core DbContext | Unit of work and mappings |
 | GlobalExceptionHandler | Cross Cutting | Middleware | Consistent error responses and logging |
+| AuthController | Presentation | Controller | Registration and login endpoints |
+| UserService | Business | Service | Password verification and token workflow |
+| JwtService | Business | Token service | Creates signed JWT bearer tokens |
+| UserRepository | Data Access | Repository | User lookup and persistence |
+| JWT Authentication | Cross Cutting | Middleware | Validates tokens and role claims |

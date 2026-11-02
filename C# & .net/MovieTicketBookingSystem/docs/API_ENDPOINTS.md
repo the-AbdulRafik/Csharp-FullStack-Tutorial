@@ -12,5 +12,8 @@ All routes are rooted at `/api` and return camelCase JSON.
 | Show seats | `GET /shows/{showId}/seats/available`, `GET /shows/{showId}/seats/booked` |
 | Bookings | `GET/POST /bookings`, `GET /bookings/{id}`, `GET /bookings/show/{showId}`, `PUT /bookings/{id}/cancel` |
 | Health | `GET /health` |
+| Authentication | `POST /auth/register`, `POST /auth/login` |
 
 `POST /shows` creates the availability rows for the screen's physical seats. `POST /bookings` accepts only identifiers and customer details; the service determines the amount from the show and releases those same seats on cancellation.
+
+Use the JWT returned by login in the `Authorization: Bearer <token>` header. Catalogue reads are public. Catalogue writes require `Admin` or `TheatreManager`; booking creation requires `Customer`; booking administration and cancellation require `Admin` or `TheatreManager`.

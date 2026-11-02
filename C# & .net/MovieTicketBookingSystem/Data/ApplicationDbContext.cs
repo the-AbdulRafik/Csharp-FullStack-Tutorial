@@ -14,6 +14,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Booking> Bookings => Set<Booking>();
     public DbSet<BookingSeat> BookingSeats => Set<BookingSeat>();
 
+    public DbSet<User> Users => Set<User>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Movie>(entity =>
@@ -94,6 +96,17 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.ToTable("BookingSeats", table => table.HasCheckConstraint("CK_BookingSeats_Price", "[Price] >= 0"));
             entity.HasOne(x => x.Booking).WithMany(x => x.BookingSeats).HasForeignKey(x => x.BookingId).OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(x => x.Seat).WithMany(x => x.BookingSeats).HasForeignKey(x => x.SeatId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(x => x.UserId);
+            entity.Property(x => x.FullName).HasMaxLength(100).IsRequired();
+            entity.Property(x => x.Email).HasMaxLength(150).IsRequired();
+            entity.HasIndex(x => x.Email).IsUnique();
+            entity.Property(x => x.PasswordHash).HasMaxLength(500).IsRequired();
+            entity.Property(x => x.Role).HasMaxLength(20).IsRequired();
+            entity.Property(x => x.CreatedAt).IsRequired();
         });
     }
 }

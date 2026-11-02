@@ -72,7 +72,7 @@ namespace MovieTicketBookingSystem.Migrations
 
                     b.HasIndex("ShowId");
 
-                    b.ToTable("Bookings", t =>
+                    b.ToTable("Bookings", null, t =>
                         {
                             t.HasCheckConstraint("CK_Bookings_TotalAmount", "[TotalAmount] >= 0");
                         });
@@ -102,7 +102,7 @@ namespace MovieTicketBookingSystem.Migrations
 
                     b.HasIndex("SeatId");
 
-                    b.ToTable("BookingSeats", t =>
+                    b.ToTable("BookingSeats", null, t =>
                         {
                             t.HasCheckConstraint("CK_BookingSeats_Price", "[Price] >= 0");
                         });
@@ -143,7 +143,7 @@ namespace MovieTicketBookingSystem.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.ToTable("Movies", t =>
+                    b.ToTable("Movies", null, t =>
                         {
                             t.HasCheckConstraint("CK_Movies_DurationMinutes", "[DurationMinutes] > 0");
                         });
@@ -202,7 +202,7 @@ namespace MovieTicketBookingSystem.Migrations
                     b.HasIndex("ScreenId", "RowName", "SeatNumber")
                         .IsUnique();
 
-                    b.ToTable("Seats", t =>
+                    b.ToTable("Seats", null, t =>
                         {
                             t.HasCheckConstraint("CK_Seats_SeatNumber", "[SeatNumber] > 0");
                         });
@@ -238,7 +238,7 @@ namespace MovieTicketBookingSystem.Migrations
 
                     b.HasIndex("ScreenId");
 
-                    b.ToTable("Shows", t =>
+                    b.ToTable("Shows", null, t =>
                         {
                             t.HasCheckConstraint("CK_Shows_TicketPrice", "[TicketPrice] >= 0");
 
@@ -296,6 +296,45 @@ namespace MovieTicketBookingSystem.Migrations
                     b.HasKey("TheatreId");
 
                     b.ToTable("Theatres");
+                });
+
+            modelBuilder.Entity("MovieTicketBookingSystem.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MovieTicketBookingSystem.Models.Booking", b =>

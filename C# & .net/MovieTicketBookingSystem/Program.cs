@@ -5,13 +5,30 @@ using MovieTicketBookingSystem.Repositories.Interfaces;
 using MovieTicketBookingSystem.Services;
 using MovieTicketBookingSystem.Services.Interfaces;
 using MovieTicketBookingSystem.Middleware;
+using MovieTicketBookingSystem.Models;
 using System.Text.Json;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
+var jwtConfiguration = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtConfiguration["Key"];
+var jwtIssuer = jwtConfiguration["Issuer"];
+var jwtAudience = jwtConfiguration["Audience"];
+
+if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
+    throw new InvalidOperationException("Jwt:Key must be configured with at least 32 characters.");
+if (string.IsNullOrWhiteSpace(jwtIssuer) || string.IsNullOrWhiteSpace(jwtAudience))
+    throw new InvalidOperationException("Jwt:Issuer and Jwt:Audience must be configured.");
 
 builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
 builder.Services.AddOpenApi();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MovieTicketBooking")));
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
@@ -30,6 +47,39 @@ builder.Services.AddScoped<IShowService>(sp => sp.GetRequiredService<ShowService
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<IBookingService>(sp => sp.GetRequiredService<BookingService>());
 
+
+// Authentication and Authorization
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtKey)
+            ),
+
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -41,9 +91,20 @@ using (var scope = app.Services.CreateScope())
 app.UseMiddleware<GlobalExceptionHandler>();
 if (app.Environment.IsDevelopment())
 {
+    await RoleSeeder.SeedAsync(app.Services, app.Configuration);
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+// SEEDING COMMANDS
+
+// DOTNET USER-SECRETS SET "SEEDUSERS:ADMINPASSWORD" "Admin@123"
+// DOTNET USER-SECRETS SET "SEEDUSERS:MANAGERPASSWORD" "MANAGER@123"
