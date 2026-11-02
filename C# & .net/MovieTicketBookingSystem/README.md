@@ -7,7 +7,9 @@ Version 1 is a backend-first ASP.NET Core Web API built with .NET 10, EF Core 10
 1. Ensure SQL Server Express is running as `.\SQLEXPRESS`.
 2. From this directory run `dotnet run`.
 3. The application applies the included `InitialCreate` migration on startup.
-4. Open `/openapi/v1.json` in development or use the included `.http` requests.
+4. Open `http://localhost:5169/openapi/v1.json` in development or use the included `.http` requests.
+
+The development launch profile intentionally uses HTTP on port 5169. HTTPS redirection is not enabled because the profile does not define an HTTPS endpoint or certificate.
 
 The connection string is in `appsettings.json`. Override it with the `ConnectionStrings__MovieTicketBooking` environment variable when using another SQL Server instance.
 
