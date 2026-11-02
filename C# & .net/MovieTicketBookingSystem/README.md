@@ -11,6 +11,10 @@ Version 1 is a backend-first ASP.NET Core Web API built with .NET 10, EF Core 10
 
 The connection string is in `appsettings.json`. Override it with the `ConnectionStrings__MovieTicketBooking` environment variable when using another SQL Server instance.
 
+## Architecture
+
+The application uses controller -> service interface -> service -> repository interface -> repository -> `ApplicationDbContext`. Each functional area has its own repository abstraction: movies, theatres, screens, seats, shows, and bookings. The [database ER diagram](./docs/database-er-diagram.eraser) can be pasted into Eraser, and the [requirements compliance checklist](./docs/requirements-compliance.md) maps the implementation to Version 1 of the developer guide.
+
 ## Endpoints
 
 - `movies`: CRUD, pagination, and title search.

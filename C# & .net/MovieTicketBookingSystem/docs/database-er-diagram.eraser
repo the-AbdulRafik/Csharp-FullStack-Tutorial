@@ -1,0 +1,76 @@
+// Paste this file into app.eraser.io using the Entity Relationship Diagram format.
+
+Movies {
+  movieId int pk
+  title string
+  description string
+  durationMinutes int
+  releaseDate date
+  language string
+  genre string
+}
+
+Theatres {
+  theatreId int pk
+  name string
+  location string
+}
+
+Screens {
+  screenId int pk
+  theatreId int fk
+  screenName string
+}
+
+Seats {
+  seatId int pk
+  screenId int fk
+  rowName string
+  seatNumber int
+  seatType string
+}
+
+Shows {
+  showId int pk
+  movieId int fk
+  screenId int fk
+  startTime datetime
+  endTime datetime
+  ticketPrice decimal
+}
+
+ShowSeats {
+  showSeatId int pk
+  showId int fk
+  seatId int fk
+  status string
+}
+
+Bookings {
+  bookingId int pk
+  bookingReference string unique
+  showId int fk
+  customerName string
+  customerEmail string
+  customerPhone string
+  bookingDate datetime
+  totalAmount decimal
+  status string
+}
+
+BookingSeats {
+  bookingSeatId int pk
+  bookingId int fk
+  seatId int fk
+  price decimal
+}
+
+Theatres.theatreId < Screens.theatreId
+Screens.screenId < Seats.screenId
+Movies.movieId < Shows.movieId
+Screens.screenId < Shows.screenId
+Shows.showId < ShowSeats.showId
+Seats.seatId < ShowSeats.seatId
+Shows.showId < Bookings.showId
+Bookings.bookingId < BookingSeats.bookingId
+Seats.seatId < BookingSeats.seatId

@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieTicketBookingSystem.DTOs.Screens;
 using MovieTicketBookingSystem.Services;
+using MovieTicketBookingSystem.Services.Interfaces;
 
 namespace MovieTicketBookingSystem.Controllers;
 
 [ApiController, Route("api/screens")]
-public class ScreensController(CatalogueService service) : ControllerBase
+public class ScreensController(IScreenService service) : ControllerBase
 {
     [HttpGet] public async Task<IActionResult> GetAll([FromQuery] int? theatreId = null) => Ok(await service.GetScreensAsync(theatreId));
     [HttpGet("{id:int}")] public async Task<IActionResult> Get(int id) => (await service.GetScreenAsync(id)) is { } result ? Ok(result) : NotFound();

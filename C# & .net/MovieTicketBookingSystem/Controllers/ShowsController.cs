@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using MovieTicketBookingSystem.DTOs.Shows;
 using MovieTicketBookingSystem.Models;
 using MovieTicketBookingSystem.Services;
+using MovieTicketBookingSystem.Services.Interfaces;
 
 namespace MovieTicketBookingSystem.Controllers;
 
 [ApiController, Route("api/shows")]
-public class ShowsController(ShowService service) : ControllerBase
+public class ShowsController(IShowService service) : ControllerBase
 {
     [HttpGet] public async Task<IActionResult> GetAll([FromQuery] DateTime? date = null, [FromQuery] int? movieId = null, [FromQuery] int? theatreId = null) => Ok(await service.GetAsync(date, movieId, theatreId));
     [HttpGet("search")] public async Task<IActionResult> Search([FromQuery] DateTime date) => Ok(await service.GetAsync(date, null, null));
