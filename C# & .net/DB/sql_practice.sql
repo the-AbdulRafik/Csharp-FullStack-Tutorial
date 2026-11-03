@@ -18,6 +18,8 @@ BEGIN
     DROP DATABASE LearnerManagementAssessment;
 END;
 GO
+
+
  
 CREATE DATABASE LearnerManagementAssessment;
 GO
@@ -323,3 +325,39 @@ SELECT * FROM AssessmentResults;
 SELECT COUNT(*), IsActive FROM STUDENTS GROUP BY ISACTIVE;
 
 SELECT COURSEID, COUNT(*) FROM Enrollments GROUP BY COURSEID HAVING COUNT(STUDENTID) > 15;  
+
+
+USE MovieTicketBookingDB;
+GO
+
+-- 1. Delete rows in reverse-dependency order to satisfy Foreign Key constraints
+DELETE FROM BookingSeats;
+DELETE FROM Bookings;
+DELETE FROM ShowSeats;
+DELETE FROM Shows;
+DELETE FROM Seats;
+DELETE FROM Screens;
+DELETE FROM Theatres;
+DELETE FROM Movies;
+
+-- 2. Reseed identity primary keys back to 0 (next inserted row receives ID 1)
+DBCC CHECKIDENT ('BookingSeats', RESEED, 0);
+DBCC CHECKIDENT ('Bookings', RESEED, 0);
+DBCC CHECKIDENT ('ShowSeats', RESEED, 0);
+DBCC CHECKIDENT ('Shows', RESEED, 0);
+DBCC CHECKIDENT ('Seats', RESEED, 0);
+DBCC CHECKIDENT ('Screens', RESEED, 0);
+DBCC CHECKIDENT ('Theatres', RESEED, 0);
+DBCC CHECKIDENT ('Movies', RESEED, 0);
+GO
+
+SELECT 
+    t.name AS TableName,
+    IDENT_CURRENT(t.name) AS CurrentIdentityValue,
+    p.rows AS [RowCount]
+FROM sys.tables t
+JOIN sys.partitions p ON t.object_id = p.object_id AND p.index_id IN (0, 1)
+WHERE t.name IN ('Movies', 'Theatres', 'Screens', 'Seats', 'Shows', 'ShowSeats', 'Bookings', 'BookingSeats');
+
+
+SELECT * from dbo.Users;
