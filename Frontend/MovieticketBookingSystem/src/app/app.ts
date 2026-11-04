@@ -16,7 +16,7 @@ export class App {
   private readonly formBuilder = new FormBuilder();
 
   protected readonly form = this.formBuilder.group({
-    fullName: ['', [Validators.required, Validators.maxLength(100)]],
+    fullName: [''],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
     password: ['', [
       Validators.required,
@@ -28,6 +28,13 @@ export class App {
   protected setMode(mode: 'login' | 'register'): void {
     this.isLoginMode.set(mode === 'login');
     this.message.set(null);
+    const fullName = this.form.controls.fullName;
+    if (mode === 'login') {
+      fullName.clearValidators();
+    } else {
+      fullName.setValidators([Validators.required, Validators.maxLength(100)]);
+    }
+    fullName.updateValueAndValidity();
     this.form.reset();
   }
 
