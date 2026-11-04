@@ -9,9 +9,12 @@ using MovieTicketBookingSystem.Models;
 using System.Text.Json;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
+using MovieTicketBookingSystem.Authorization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +63,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthorizationHandler, BookingCancellationHandler>();
 
 
 builder.Services
@@ -84,7 +88,12 @@ builder.Services
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("BookingCancellation", policy =>
+        policy.RequireAuthenticatedUser()
+            .AddRequirements(new BookingCancellationRequirement()));
+});
 
 
 var app = builder.Build();
