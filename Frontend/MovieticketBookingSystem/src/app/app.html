@@ -54,6 +54,7 @@
     </form>
 
     @if (isLoginMode() && authService.isLoggedIn()) {
+      <p class="signed-in">You are signed in and your session token is saved.</p>
       <button class="secondary-button" type="button" (click)="logout()">Sign out</button>
     }
 

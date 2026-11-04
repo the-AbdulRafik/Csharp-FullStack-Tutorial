@@ -163,6 +163,13 @@ button:disabled {
   background: #eee7de;
 }
 
+.signed-in {
+  margin: 1.1rem 0 0;
+  color: #236449;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .status {
   margin-bottom: 1rem;
   padding: 0.8rem 1rem;
