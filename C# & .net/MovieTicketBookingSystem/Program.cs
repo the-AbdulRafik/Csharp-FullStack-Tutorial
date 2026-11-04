@@ -104,7 +104,14 @@ using (var scope = app.Services.CreateScope())
     database.Database.Migrate();
 }
 
+// 1. HTTPS Redirection
+app.UseHttpsRedirection();
+
+// 2. Routing
+//app.UseRouting();
+
 app.UseMiddleware<GlobalExceptionHandler>();
+
 app.UseCors("AngularDevelopment");
 if (app.Environment.IsDevelopment())
 {
@@ -113,11 +120,41 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+
+// 3. Endpoint Metadata Diagnostics
+if (app.Environment.IsDevelopment())
+{
+    app.UseMiddleware<EndpointMetadataMiddleware>();
+}
+
+// 4. Authentication
+// Validates JWT and populates HttpContext.User
 app.UseAuthentication();
 
+
+
+// 5. Authentication and Authorization Diagnostics
+if (app.Environment.IsDevelopment())
+{
+    app.UseMiddleware<AuthenticationDiagnosticsMiddleware>();
+    app.UseMiddleware<AuthorizationDiagnosticsMiddleware>();
+}
+
+// 6. Authorization
+// Checks endpoint access permissions
 app.UseAuthorization();
 
+
+// ==========================================
+// 12. MAP CONTROLLERS
+// ==========================================
+
 app.MapControllers();
+
+
+// ==========================================
+// 13. RUN APPLICATION
+// ==========================================
 
 app.Run();
 
