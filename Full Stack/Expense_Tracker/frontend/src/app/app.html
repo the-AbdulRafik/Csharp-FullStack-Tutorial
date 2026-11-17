@@ -1,0 +1,27 @@
+<div class="app-shell">
+  <header class="app-header">
+    <a class="brand" routerLink="/">{{ title() }}</a>
+    <nav aria-label="Main navigation">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      <a routerLink="/transactions" routerLinkActive="active">Transactions</a>
+      <a routerLink="/categories" routerLinkActive="active">Categories</a>
+      <a routerLink="/reports" routerLinkActive="active">Reports</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <footer class="app-footer">
+    <span>Phase 0 foundation</span>
+    <span class="health" [class.failed]="healthStatus() === 'failed'">
+      API:
+      @switch (healthStatus()) {
+        @case ('loading') { checking... }
+        @case ('connected') { connected }
+        @case ('failed') { unavailable }
+      }
+    </span>
+  </footer>
+</div>

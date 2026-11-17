@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f8fafc;
+  color: #172033;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.page-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
