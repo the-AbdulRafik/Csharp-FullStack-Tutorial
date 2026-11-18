@@ -1,6 +1,6 @@
 # ExpenseTracker
 
-ExpenseTracker is a learning project foundation for building a full-stack expense application with Angular, ASP.NET Core, EF Core, and SQL Server.
+ExpenseTracker is a personal expense tracking MVP built with Angular, ASP.NET Core, EF Core, and SQL Server. It tracks INR income and expenses, categories, dashboard totals, and reports.
 
 ## Technology stack
 
@@ -61,4 +61,4 @@ The Angular test script is available with `npm test`; it requires a local Chrome
 
 ## Current status
 
-Phase 0 is implemented: project structure, API health endpoint, EF Core configuration without business tables, Angular shell, API health integration, tests, and documentation. Expense and category features are intentionally not implemented.
+The MVP includes category CRUD, transaction CRUD and filtering, real database dashboard summaries, monthly reports, category breakdowns, a responsive Angular interface, OpenAPI, Scalar, CORS, and SQL Server integration.

@@ -18,4 +18,4 @@ The API is configured for SQL Server LocalDB using the `ExpenseTrackerDbContext`
 - `CategoryId`: foreign key to Categories
 - `CreatedAtUtc`: creation timestamp
 
-These are planned only. Categories and Transactions entities, tables, and business migrations have not been implemented in Phase 0. The database is not created by the application during startup.
+The existing `InitialCreate` migration implements these tables and was already applied to SQL Server Express. The database is not recreated or deleted during normal application startup.
