@@ -1,12 +1,13 @@
 using ExpenseTracker.Api.Data.Configurations;
 using ExpenseTracker.Api.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTracker.Api.Data;
 
 public class ExpenseTrackerDbContext(
     DbContextOptions<ExpenseTrackerDbContext> options)
-    : DbContext(options)
+    : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<Category> Categories => Set<Category>();
 
