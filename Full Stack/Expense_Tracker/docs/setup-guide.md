@@ -28,3 +28,21 @@ Open `http://localhost:4200`. The development environment calls `https://localho
 ## Database
 
 Install SQL Server LocalDB separately if it is not already available. Phase 0 only configures the connection string and DbContext; it does not create the database or run migrations.
+
+## Authentication setup
+
+Development JWT settings remain outside source control:
+
+```powershell
+cd backend\src\ExpenseTracker.Api
+dotnet user-secrets set "Jwt:SigningKey" "<development-signing-key>"
+dotnet user-secrets set "Jwt:Issuer" "ExpenseTracker.Api"
+dotnet user-secrets set "Jwt:Audience" "ExpenseTracker.Angular"
+```
+
+Apply the additive Identity migration without resetting the database:
+
+```powershell
+cd backend
+dotnet ef database update --project src\ExpenseTracker.Api --startup-project src\ExpenseTracker.Api
+```

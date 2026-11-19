@@ -18,4 +18,18 @@ The API is configured for SQL Server LocalDB using the `ExpenseTrackerDbContext`
 - `CategoryId`: foreign key to Categories
 - `CreatedAtUtc`: creation timestamp
 
-The existing `InitialCreate` migration implements these tables and was already applied to SQL Server Express. The database is not recreated or deleted during normal application startup.
+These are planned only. Categories and Transactions entities, tables, and business migrations have not been implemented in Phase 0. The database is not created by the application during startup.
+
+## Authentication schema
+
+The additive `20261119035916_AddIdentity` migration adds the standard ASP.NET Core Identity tables:
+
+- `AspNetUsers`
+- `AspNetRoles`
+- `AspNetRoleClaims`
+- `AspNetUserClaims`
+- `AspNetUserLogins`
+- `AspNetUserRoles`
+- `AspNetUserTokens`
+
+The migration was applied without modifying or recreating `Categories`, `Transactions`, or `InitialCreate`. Identity stores password hashes in `AspNetUsers.PasswordHash`; passwords are not stored in plaintext.

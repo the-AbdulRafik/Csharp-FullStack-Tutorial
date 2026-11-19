@@ -1,10 +1,12 @@
 # Development Roadmap
 
 - [x] Phase 0: project foundation and verification
-- [x] Phase 1: categories and category management
-- [x] Phase 2: transactions and validation
-- [x] Phase 3: dashboard summaries
-- [x] Phase 4: reports and filtering
-- [ ] Phase 5: quality improvements, deployment, and production configuration
+- [x] Stage 1: backend authentication
+- [x] Stage 2: Angular authentication
+- [ ] Stage 3: categories CRUD
+- [ ] Stage 4: transactions CRUD
+- [ ] Stage 5: dashboard
+- [ ] Stage 6: reports
+- [ ] Stage 7: final integration and polish
 
-Phase 0 is complete after the documented build, test, and runtime checks have been performed. LocalDB-specific verification remains environment-dependent when the LocalDB executable is unavailable.
+The authentication stages include Identity tables, register/login JWT endpoints, login/register pages, a route guard, and an HTTP interceptor. Category and transaction APIs remain outside the current implementation scope.
