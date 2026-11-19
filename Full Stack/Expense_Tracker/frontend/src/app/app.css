@@ -43,6 +43,15 @@ nav a.active {
   color: #fff;
 }
 
+.logout-button {
+  background: transparent;
+  border: 1px solid #64748b;
+  border-radius: 0.25rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+}
+
 .content {
   flex: 1;
   margin: 0 auto;
