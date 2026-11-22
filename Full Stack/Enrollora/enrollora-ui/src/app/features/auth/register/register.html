@@ -1,0 +1,159 @@
+<div class="register-page">
+  <div class="register-card">
+    <!-- Header -->
+    <div class="text-center mb-3">
+      <h2 class="brand-name">Enrollora</h2>
+      <p class="text-muted mb-0">Create your student account</p>
+    </div>
+
+    <h5 class="form-heading">Student Registration</h5>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="row">
+        <!-- Full Name -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Full Name</label>
+
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Enter your name"
+          />
+          @if (registerForm.controls.name.touched && registerForm.controls.name.invalid) {
+            <small class="text-danger"> Full name is required. </small>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email</label>
+
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter your email"
+          />
+          @if (registerForm.controls.email.touched) {
+            @if (registerForm.controls.email.hasError('required')) {
+              <small class="text-danger"> Email is required. </small>
+            } @else if (registerForm.controls.email.hasError('email')) {
+              <small class="text-danger"> Enter a valid email address. </small>
+            }
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Password</label>
+
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Enter password"
+          />
+          @if (registerForm.controls.password.touched) {
+            @if (registerForm.controls.password.hasError('required')) {
+              <small class="text-danger"> Password is required. </small>
+            } @else if (registerForm.controls.password.hasError('minlength')) {
+              <small class="text-danger"> Password must contain at least 8 characters. </small>
+            }
+          }
+        </div>
+
+        <!-- Department -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Department</label>
+
+          <input
+            type="text"
+            class="form-control"
+            formControlName="department"
+            placeholder="Enter department"
+          />
+          @if (registerForm.controls.department.touched && registerForm.controls.department.invalid) {
+            <small class="text-danger"> Department is required. </small>
+          }
+        </div>
+
+        <!-- Age -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Age</label>
+
+          <input
+            type="number"
+            class="form-control"
+            formControlName="age"
+            min="17"
+            max="60"
+            placeholder="Enter age"
+          />
+          @if (registerForm.controls.age.touched) {
+            @if (registerForm.controls.age.hasError('required')) {
+              <small class="text-danger"> Age is required. </small>
+            } @else if (registerForm.controls.age.hasError('min') || registerForm.controls.age.hasError('max')) {
+              <small class="text-danger"> Age must be between 17 and 60. </small>
+            }
+          }
+        </div>
+
+        <!-- CGPA -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">CGPA</label>
+
+          <input
+            type="number"
+            class="form-control"
+            formControlName="cgpa"
+            min="0"
+            max="10"
+            step="0.01"
+            placeholder="Enter CGPA"
+          />
+          @if (registerForm.controls.cgpa.touched) {
+            @if (registerForm.controls.cgpa.hasError('required')) {
+              <small class="text-danger"> CGPA is required. </small>
+            } @else if (registerForm.controls.cgpa.hasError('min') || registerForm.controls.cgpa.hasError('max')) {
+              <small class="text-danger"> CGPA must be between 0 and 10. </small>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      @if (successMessage) {
+        <div class="alert alert-success py-2">
+          {{ successMessage }}
+        </div>
+      }
+
+      <!-- Error Message -->
+      @if (errorMessage) {
+        <div class="alert alert-danger py-2">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 mt-2"
+        [disabled]="registerForm.invalid || isLoading"
+      >
+        @if (isLoading) {
+          Registering...
+        } @else {
+          Create Account
+        }
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="login-link text-center mt-3">
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>
