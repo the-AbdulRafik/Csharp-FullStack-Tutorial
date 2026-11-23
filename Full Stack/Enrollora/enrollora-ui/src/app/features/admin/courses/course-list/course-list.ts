@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../../../shared/shared.module';
 
 import { CourseService } from '../course.service';
 import { CourseResponse } from '../course.models';
@@ -7,7 +8,7 @@ import { CourseResponse } from '../course.models';
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })

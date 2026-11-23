@@ -157,22 +157,7 @@
                 <td>{{ student.cgpa | number: '1.2-2' }}</td>
 
                 <td>
-                  <span
-                    class="status-badge"
-                    [class.pending]="student.status === 0"
-                    [class.approved]="student.status === 1"
-                    [class.rejected]="student.status === 2"
-                  >
-                    {{
-                      student.status === 0
-                        ? 'Pending'
-                        : student.status === 1
-                          ? 'Approved'
-                          : student.status === 2
-                            ? 'Rejected'
-                            : 'Unknown'
-                    }}
-                  </span>
+                  <app-status-badge [status]="student.status"></app-status-badge>
                 </td>
 
                 <td>{{ student.registeredAt | date: 'dd MMM yyyy' }}</td>

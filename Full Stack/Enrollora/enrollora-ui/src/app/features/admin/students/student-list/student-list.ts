@@ -2,14 +2,14 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { StudentService } from '../student.service';
 import { StudentResponse, StudentFilter, UpdateStudentRequest } from '../student.models';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [DatePipe, DecimalPipe, FormsModule, ReactiveFormsModule],
+  imports: [DatePipe, DecimalPipe, FormsModule, ReactiveFormsModule, SharedModule],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css',
 })
