@@ -1,19 +1,23 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../shared/shared.module';
+import { CourseFormComponent } from '../course-form/course-form.component';
 
 import { CourseService } from '../course.service';
-import { CourseResponse } from '../course.models';
+import { CourseResponse, SaveCourseRequest } from '../course.models';
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, CourseFormComponent],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
 export class CourseListComponent implements OnInit {
   private courseService = inject(CourseService);
+
+  // Demonstration of @ViewChild accessing a child component
+  @ViewChild(CourseFormComponent) courseFormComponent?: CourseFormComponent;
 
   // Signals
   courses = signal<CourseResponse[]>([]);
@@ -27,8 +31,36 @@ export class CourseListComponent implements OnInit {
   totalRecords = signal(0);
   totalPages = signal(0);
 
+  // Modal & Form State
+  isModalOpen = signal(false);
+  selectedCourseForEdit = signal<CourseResponse | null>(null);
+
   ngOnInit(): void {
     this.loadCourses();
+  }
+
+  openCreateModal(): void {
+    this.selectedCourseForEdit.set(null);
+    this.isModalOpen.set(true);
+  }
+
+  closeModal(): void {
+    this.isModalOpen.set(false);
+    this.selectedCourseForEdit.set(null);
+  }
+
+  handleFormSubmit(request: SaveCourseRequest): void {
+    this.isLoading.set(true);
+    this.courseService.createCourse(request).subscribe({
+      next: () => {
+        this.closeModal();
+        this.loadCourses();
+      },
+      error: (err) => {
+        this.errorMessage.set(err.error?.detail || err.error?.message || 'Failed to create course.');
+        this.isLoading.set(false);
+      }
+    });
   }
 
   // Load courses from backend

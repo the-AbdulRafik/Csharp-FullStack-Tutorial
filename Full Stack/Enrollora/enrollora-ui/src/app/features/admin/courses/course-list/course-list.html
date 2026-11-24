@@ -7,7 +7,7 @@
       <p>Manage courses, fees, capacity and availability.</p>
     </div>
 
-    <button class="btn-add"><span>+</span> Add New Course</button>
+    <button class="btn-add" (click)="openCreateModal()"><span>+</span> Add New Course</button>
   </div>
 
   <!-- Summary Cards -->
@@ -185,4 +185,14 @@
       </div>
     }
   </div>
+
+  <!-- Modal for Creating/Editing Course with Reactive Form -->
+  <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+    <span modal-title>{{ selectedCourseForEdit() ? 'Edit Course' : 'Create New Course' }}</span>
+    <app-course-form
+      [courseToEdit]="selectedCourseForEdit()"
+      (formSubmit)="handleFormSubmit($event)"
+      (cancel)="closeModal()"
+    ></app-course-form>
+  </app-modal>
 </div>
