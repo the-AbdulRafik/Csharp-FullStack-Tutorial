@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
         <div class="modal-body">
           <ng-content></ng-content>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" *ngIf="showFooter">
           <ng-content select="[modal-footer]"></ng-content>
         </div>
       </div>
@@ -82,6 +82,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppModalComponent {
   @Input() isOpen = false;
+  @Input() showFooter = false;
   @Output() close = new EventEmitter<void>();
 
   onBackdropClick(): void {

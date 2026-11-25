@@ -29,6 +29,7 @@ export class StatusColorDirective implements OnChanges {
     }
 
     this.renderer.setStyle(this.el.nativeElement, 'borderLeftWidth', '4px');
+    this.renderer.setStyle(this.el.nativeElement, 'borderLeftStyle', 'solid');
     this.renderer.setStyle(this.el.nativeElement, 'borderLeftColor', border);
   }
 }

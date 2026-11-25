@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map, switchMap, of } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { CourseResponse } from '../../features/admin/courses/course.models';
 import { CourseService } from '../../features/admin/courses/course.service';
 
@@ -72,10 +72,20 @@ export class EnrollmentStateService {
 
   setSearchQuery(query: string): void {
     this._searchQuery$.next(query);
+    this._state$.next({
+      ...this._state$.value,
+      searchTerm: query,
+      lastUpdated: new Date()
+    });
   }
 
   setAvailabilityFilter(filter: string): void {
     this._availabilityFilter$.next(filter);
+    this._state$.next({
+      ...this._state$.value,
+      selectedCategory: filter,
+      lastUpdated: new Date()
+    });
   }
 
   refreshCourses(): Observable<CourseResponse[]> {

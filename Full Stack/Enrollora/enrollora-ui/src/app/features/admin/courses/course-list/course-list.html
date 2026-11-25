@@ -106,8 +106,10 @@
                       {{ course.courseName.charAt(0).toUpperCase() }}
                     </div>
                     <div>
-                      <strong>{{ course.courseName }}</strong>
-                      <small>Course ID: #{{ course.courseId }}</small>
+                      <a [routerLink]="['/admin/courses', course.courseId]" class="text-decoration-none">
+                        <strong>{{ course.courseName }}</strong>
+                      </a>
+                      <small class="d-block">Course ID: #{{ course.courseId }}</small>
                     </div>
                   </div>
                 </td>

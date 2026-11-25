@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CourseFormComponent } from '../course-form/course-form.component';
 
@@ -9,7 +10,7 @@ import { CourseResponse, SaveCourseRequest } from '../course.models';
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule, SharedModule, CourseFormComponent],
+  imports: [CommonModule, RouterModule, SharedModule, CourseFormComponent],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
